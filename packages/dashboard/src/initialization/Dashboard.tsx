@@ -19,6 +19,7 @@ import { Pages } from '../pages/routes'
 import { useAppearance } from '../pages/Personas/api'
 import { Web3Provider } from '@masknet/web3-shared'
 import { Web3Context } from '../web3/context'
+import { PersonaContext } from '../pages/Personas/hooks/usePersonaContext'
 
 const PluginRender = createInjectHooksRenderer(useActivatedPluginsDashboard, (x) => x.GlobalInjection)
 
@@ -40,15 +41,17 @@ export default function DashboardRoot() {
                 <StyledEngineProvider injectFirst>
                     <StylesProvider>
                         <ThemeProvider theme={theme}>
-                            <ErrorBoundary>
-                                <CssBaseline />
-                                <CustomSnackbarProvider>
-                                    <HashRouter>
-                                        <Pages />
-                                    </HashRouter>
-                                    <PluginRender />
-                                </CustomSnackbarProvider>
-                            </ErrorBoundary>
+                            <PersonaContext.Provider>
+                                <ErrorBoundary>
+                                    <CssBaseline />
+                                    <CustomSnackbarProvider>
+                                        <HashRouter>
+                                            <Pages />
+                                        </HashRouter>
+                                        <PluginRender />
+                                    </CustomSnackbarProvider>
+                                </ErrorBoundary>
+                            </PersonaContext.Provider>
                         </ThemeProvider>
                     </StylesProvider>
                 </StyledEngineProvider>
