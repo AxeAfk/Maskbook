@@ -325,6 +325,7 @@
     "plugin_wallet_on_create": "建立錢包",
     "plugin_wallet_on_connect": "連接錢包",
     "plugin_wallet_wrong_network": "",
+    "plugin_Wallet_pending_transactions": "",
     "plugin_wallet_setup_title_create": "建立一個錢包",
     "plugin_wallet_create_import_choose": "",
     "plugin_wallet_create_a_new_wallet": "",

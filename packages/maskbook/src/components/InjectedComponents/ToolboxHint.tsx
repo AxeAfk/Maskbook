@@ -1,4 +1,4 @@
-import { makeStyles, MenuItem, Typography } from '@material-ui/core'
+import { CircularProgress, makeStyles, MenuItem, Typography } from '@material-ui/core'
 import classNames from 'classnames'
 import {
     useAccount,
@@ -7,6 +7,7 @@ import {
     useChainIdValid,
     useWallet,
     formatEthereumAddress,
+    TransactionStatusType,
 } from '@masknet/web3-shared'
 import { useActivatedPluginSNSAdaptorWithOperatingChainSupportedMet } from '@masknet/plugin-infra'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
@@ -30,6 +31,7 @@ import { WalletIcon } from '../shared/WalletIcon'
 import { useI18N } from '../../utils'
 import { base as ITO_Plugin } from '../../plugins/ITO/base'
 import { base as RedPacket_Plugin } from '../../plugins/RedPacket/base'
+import { useRecentTransactions } from '../../plugins/Wallet/hooks/useRecentTransactions'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -127,6 +129,12 @@ export function ToolboxHint(props: ToolboxHintProps) {
     const chainIdValid = useChainIdValid()
     const chainDetailed = useChainDetailed()
     const operatingSupportedChainMapping = useActivatedPluginSNSAdaptorWithOperatingChainSupportedMet()
+
+    //#region recent pending transactions
+    const { value: pendingTransactions = [], retry: retryTransactions } = useRecentTransactions(
+        TransactionStatusType.NOT_DEPEND,
+    )
+    //#endregion
 
     //#region Encrypted message
     const openEncryptedMessage = useCallback(
@@ -262,11 +270,26 @@ export function ToolboxHint(props: ToolboxHintProps) {
                     {isWalletValid ? <WalletIcon /> : <WalletSharp classes={{ root: classes.icon }} size={24} />}
 
                     <Typography className={classes.title}>
-                        {account
-                            ? chainIdValid
-                                ? formatEthereumAddress(account, 4)
-                                : t('plugin_wallet_wrong_network')
-                            : t('plugin_wallet_on_connect')}
+                        {account ? (
+                            chainIdValid ? (
+                                pendingTransactions.length > 0 ? (
+                                    <>
+                                        <span>
+                                            {t('plugin_Wallet_pending_transactions', {
+                                                count: pendingTransactions.length,
+                                            })}
+                                        </span>
+                                        <CircularProgress size={20} color="inherit" />
+                                    </>
+                                ) : (
+                                    formatEthereumAddress(account, 4)
+                                )
+                            ) : (
+                                t('plugin_wallet_wrong_network')
+                            )
+                        ) : (
+                            t('plugin_wallet_on_connect')
+                        )}
                         {account && chainIdValid && chainDetailed?.network !== 'mainnet' ? (
                             <FiberManualRecordIcon
                                 className={classes.chainIcon}
