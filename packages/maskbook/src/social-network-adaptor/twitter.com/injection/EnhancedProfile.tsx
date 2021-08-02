@@ -15,7 +15,6 @@ import {
     searchProfileTabListSelector,
     searchProfileTabPageSelector,
     searchProfileTabSelector,
-    bioCardSelector,
 } from '../utils/selector'
 import { getNickname, getTwitterId, getBioDescription } from '../utils/user'
 import Color from 'color'
