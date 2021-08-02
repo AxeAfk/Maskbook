@@ -1,4 +1,4 @@
-import { useRemoteControlledDialog } from '@masknet/shared'
+import { useRemoteControlledDialog, useStylesExtends } from '@masknet/shared'
 import {
     EthereumTokenType,
     formatBalance,
@@ -13,11 +13,11 @@ import {
     useRedPacketConstants,
     useTokenBalance,
 } from '@masknet/web3-shared'
+import { omit } from 'lodash-es'
 import { FormControl, InputLabel, makeStyles, MenuItem, MenuProps, Select, TextField } from '@material-ui/core'
 import BigNumber from 'bignumber.js'
 import { ChangeEvent, useCallback, useMemo, useState } from 'react'
 import { v4 as uuid } from 'uuid'
-import { useStylesExtends } from '../../../components/custom-ui-helper'
 import { useCurrentIdentity } from '../../../components/DataSource/useActivatedUI'
 import ActionButton from '../../../extension/options-page/DashboardComponents/ActionButton'
 import { useI18N } from '../../../utils'
@@ -178,7 +178,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
             name: senderName,
             message: message || t('plugin_red_packet_best_wishes'),
             shares: shares || 0,
-            token,
+            token: token ? (omit(token, ['logoURI']) as FungibleTokenDetailed) : undefined,
             total: totalAmount.toFixed(),
         }),
         [isRandom, senderName, message, t('plugin_red_packet_best_wishes'), shares, token, totalAmount],
