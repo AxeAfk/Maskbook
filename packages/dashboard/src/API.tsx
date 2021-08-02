@@ -4,6 +4,8 @@
 
 import type { Services as ServiceType } from '../../maskbook/dist/extension/service'
 import type { MaskMessage } from '../../maskbook/dist/utils/messages'
+import type { WalletMessages } from '@masknet/plugin-wallet'
+
 export let Services: typeof ServiceType = null!
 export let Messages: typeof MaskMessage = null!
 export let PluginServices: PluginServices = null!
@@ -12,7 +14,7 @@ export interface PluginServices {
     Wallet: typeof import('../../maskbook/dist/plugins/Wallet/messages').WalletRPC
 }
 export interface PluginMessages {
-    Wallet: typeof import('../../maskbook/dist/plugins/Wallet/messages').WalletMessages
+    Wallet: typeof WalletMessages
 }
 export function setService(x: typeof ServiceType) {
     Services = x
