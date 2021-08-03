@@ -36,11 +36,6 @@ export enum DialogTabs {
     past = 1,
 }
 
-export enum RpTypeTabs {
-    ERC20 = 0,
-    ERC721 = 1,
-}
-
 export interface RedPacketAvailability {
     token_address: string
     balance: string

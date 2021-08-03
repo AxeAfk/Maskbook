@@ -19,8 +19,8 @@ interface TabPanelProps extends BoxProps {
 export interface AbstractTabProps extends withClasses<'tab' | 'tabs' | 'tabPanel' | 'indicator'> {
     tabs: (Omit<TabPanelProps, 'height' | 'minHeight'> & {
         cb?: () => void
-        disableFocusRipple: boolean
-        disableRipple: boolean
+        disableFocusRipple?: boolean
+        disableRipple?: boolean
     })[]
     state?: readonly [number, (next: number) => void]
     index?: number

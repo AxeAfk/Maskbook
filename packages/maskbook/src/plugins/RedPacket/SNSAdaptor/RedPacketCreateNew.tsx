@@ -1,11 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles'
 import type { Theme } from '@material-ui/core'
 import { useState } from 'react'
-import { RedPacketFormProps, RedPacketForm } from './RedPacketForm'
+import { RedPacketFormProps, RedPacketERC20Form } from './RedPacketERC20Form'
+import { RedPacketERC721Form } from './RedPacketERC721Form'
 import AbstractTab, { AbstractTabProps } from '../../../components/shared/AbstractTab'
 import { useI18N } from '../../../utils'
-import { RpTypeTabs } from '../types'
+
 import { IconURLs } from './IconURL'
+
+enum RpTypeTabs {
+    ERC20 = 0,
+    ERC721 = 1,
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
     tab: {
@@ -57,7 +63,7 @@ export function RedPacketCreateNew(props: RedPacketFormProps) {
                     </div>
                 ),
                 children: (
-                    <RedPacketForm
+                    <RedPacketERC20Form
                         origin={origin}
                         onNext={onNext}
                         onChange={onChange}
@@ -65,8 +71,6 @@ export function RedPacketCreateNew(props: RedPacketFormProps) {
                     />
                 ),
                 sx: { p: 0 },
-                disableFocusRipple: true,
-                disableRipple: true,
             },
             {
                 label: (
@@ -75,10 +79,8 @@ export function RedPacketCreateNew(props: RedPacketFormProps) {
                         <span>{t('plugin_red_packet_erc721_tab_title')}</span>
                     </div>
                 ),
-                children: <div />,
+                children: <RedPacketERC721Form />,
                 sx: { p: 0 },
-                disableFocusRipple: true,
-                disableRipple: true,
             },
         ],
         state,
